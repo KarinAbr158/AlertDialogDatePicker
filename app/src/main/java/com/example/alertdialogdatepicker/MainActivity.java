@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         select.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final CharSequence[] items = {"Item 1", "Item 2", "Item 3", "Item 4"};
+                final CharSequence[] items = {"Black", "Disco", "Emo", "Satan"};
                 final boolean[] selectedItems = new boolean[items.length];
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
