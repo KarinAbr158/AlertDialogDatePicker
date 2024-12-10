@@ -23,7 +23,6 @@ import java.util.Calendar;
 public class MainActivity extends AppCompatActivity {
     Button select;
     Button date;
-    TextView txt;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,7 +35,6 @@ public class MainActivity extends AppCompatActivity {
         });
         select = findViewById(R.id.button);
         date = findViewById(R.id.button2);
-        txt = findViewById(R.id.textView);
 
         select.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
                                 selectedItemsText.append(items[i]).append(" ");
                             }
                         }
-                        Toast.makeText(MainActivity.this, selectedItemsText.toString(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, selectedItemsText.toString(), Toast.LENGTH_LONG).show();
                     }
                 });
                 builder.setNegativeButton("Cancel", null);
