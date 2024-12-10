@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     Button select;
     Button date;
     TextView txt;
+    TextView txt2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         select = findViewById(R.id.button);
         date = findViewById(R.id.button2);
         txt = findViewById(R.id.textView);
+        txt2 = findViewById(R.id.textView2);
 
         select.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                                 String selectedDate = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
-                                Toast.makeText(MainActivity.this, "Selected Date: " + selectedDate, Toast.LENGTH_LONG).show();
+                                txt2.setText(selectedDate);
                             }
                         },
                         year, month, day
