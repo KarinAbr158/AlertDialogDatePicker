@@ -2,12 +2,14 @@ package com.example.alertdialogdatepicker;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -41,22 +43,7 @@ public class MainActivity extends AppCompatActivity {
         select.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new AlertDialog.Builder(MainActivity.this)
-                        .setTitle("Select")
-                        .setMessage("Just make sure this is what you want :)")
-                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                Toast.makeText(MainActivity.this,":)", Toast.LENGTH_LONG).show();
-                            }
-                        })
-                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                Toast.makeText(MainActivity.this,":(", Toast.LENGTH_LONG).show();
-                            }
-                        })
-                        .show();
+                showTimePickerDialog();
             }
         });
         date.setOnClickListener(new View.OnClickListener() {
@@ -73,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                                 String selectedDate = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
-                                Toast.makeText(MainActivity.this, "Selected Date: " + selectedDate, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MainActivity.this, "Selected Date: " + selectedDate, Toast.LENGTH_LONG).show();
                             }
                         },
                         year, month, day
@@ -81,5 +68,22 @@ public class MainActivity extends AppCompatActivity {
                 datePickerDialog.show();
             }
         });
+    }
+    private void showTimePickerDialog() {
+        Calendar calendar = Calendar.getInstance();
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+        TimePickerDialog timePickerDialog = new TimePickerDialog(
+                MainActivity.this,
+                new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        String time = String.format("%02d:%02d", hourOfDay, minute);
+                        txt.setText(time);
+                    }
+                },
+                hour, minute, true
+        );
+        timePickerDialog.show();
     }
 }
