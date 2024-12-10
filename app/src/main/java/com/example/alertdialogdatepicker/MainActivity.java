@@ -18,15 +18,12 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import org.w3c.dom.Text;
-
 import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
     Button select;
     Button date;
     TextView txt;
-    TextView txt2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,12 +37,35 @@ public class MainActivity extends AppCompatActivity {
         select = findViewById(R.id.button);
         date = findViewById(R.id.button2);
         txt = findViewById(R.id.textView);
-        txt2 = findViewById(R.id.textView2);
 
         select.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showTimePickerDialog();
+                final CharSequence[] items = {"Item 1", "Item 2", "Item 3", "Item 4"};
+                final boolean[] selectedItems = new boolean[items.length];
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setTitle("Select Items");
+                builder.setMultiChoiceItems(items, selectedItems, new DialogInterface.OnMultiChoiceClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                        selectedItems[which] = isChecked;
+                    }
+                });
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        StringBuilder selectedItemsText = new StringBuilder("Selected items: ");
+                        for (int i = 0; i < selectedItems.length; i++) {
+                            if (selectedItems[i]) {
+                                selectedItemsText.append(items[i]).append(" ");
+                            }
+                        }
+                        Toast.makeText(MainActivity.this, selectedItemsText.toString(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+                builder.setNegativeButton("Cancel", null);
+                builder.show();
             }
         });
         date.setOnClickListener(new View.OnClickListener() {
@@ -62,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                                 String selectedDate = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
-                                txt2.setText(selectedDate);
+                                Toast.makeText(MainActivity.this, selectedDate, Toast.LENGTH_LONG).show();
                             }
                         },
                         year, month, day
@@ -70,22 +90,5 @@ public class MainActivity extends AppCompatActivity {
                 datePickerDialog.show();
             }
         });
-    }
-    private void showTimePickerDialog() {
-        Calendar calendar = Calendar.getInstance();
-        int hour = calendar.get(Calendar.HOUR_OF_DAY);
-        int minute = calendar.get(Calendar.MINUTE);
-        TimePickerDialog timePickerDialog = new TimePickerDialog(
-                MainActivity.this,
-                new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        String time = String.format("%02d:%02d", hourOfDay, minute);
-                        txt.setText(time);
-                    }
-                },
-                hour, minute, true
-        );
-        timePickerDialog.show();
     }
 }
